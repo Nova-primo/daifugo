@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    background:#1a1a1a;
+    color:white;
+    text-align:center;
+    font-family:sans-serif;
+}
+button {
+    font-size:20px;
+    margin:10px;
+}
+</style>
+</head>
+<body>
+
+<h2>大富豪（テスト）</h2>
+
+<button onclick="send('カード出した')">カード出す</button>
+<button onclick="send('パス')">パス</button>
+
+<div id="log"></div>
+
+<script>
+const ws = new WebSocket("ws://localhost:10000");
+ws.onmessage = (e) => {
+    document.getElementById("log").innerHTML += "<p>" + e.data + "</p>";
+};
+
+function send(msg){
+    ws.send(msg);
+}
+</script>
+
+</body>
+</html>
