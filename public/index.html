@@ -25,7 +25,10 @@ button {
 <div id="log"></div>
 
 <script>
-const ws = new WebSocket("ws://localhost:10000");
+
+</script>
+const ws = new WebSocket("wss://" + location.host);
+
 ws.onmessage = (e) => {
     document.getElementById("log").innerHTML += "<p>" + e.data + "</p>";
 };
@@ -33,7 +36,5 @@ ws.onmessage = (e) => {
 function send(msg){
     ws.send(msg);
 }
-</script>
-
 </body>
 </html>
