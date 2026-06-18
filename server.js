@@ -1,15 +1,15 @@
 const express = require("express");
 const WebSocket = require("ws");
 
+const app = express();
+
+app.use(express.static("public"));
+
 const PORT = process.env.PORT || 10000;
 
 const server = app.listen(PORT, () => {
-    console.log("Server running");
+    console.log("Server running on port " + PORT);
 });
-
-const app = express();
-app.use(express.static("public"));
-
 
 const wss = new WebSocket.Server({ server });
 
