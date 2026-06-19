@@ -13,6 +13,20 @@ button {
     font-size:20px;
     margin:10px;
 }
+#hand {
+    margin-top:20px;
+}
+
+.card {
+    display:inline-block;
+    padding:10px;
+    margin:5px;
+    background:white;
+    color:black;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
 </style>
 </head>
 <body>
@@ -24,6 +38,8 @@ button {
 
 <div id="log"></div>
 
+<div id="hand"></div>
+
 <script>
 const ws = new WebSocket("wss://" + location.host);
 
@@ -34,6 +50,40 @@ ws.onmessage = (e) => {
 function send(msg){
     ws.send(msg);
 }
+
+const suits = ["♠","♥","♦","♣"];
+const ranks = ["3","4","5","6","7","8","9","10","J","Q","K","A","2"];
+
+let hand = [];
+
+function createHand() {
+    hand = [];
+    for(let i=0;i<5;i++){
+        const suit = suits[Math.floor(Math.random()*4)];
+        const rank = ranks[Math.floor(Math.random()*13)];
+        hand.push(suit + rank);
+    }
+    renderHand();
+}
+
+function renderHand(){
+    const handDiv = document.getElementById("hand");
+    handDiv.innerHTML = "";
+
+    hand.forEach(card => {
+        const el = document.createElement("div");
+        el.className = "card";
+        el.innerText = card;
+
+        el.onclick = () => {
+            send(card);
+        };
+
+        handDiv.appendChild(el);
+    });
+}
+
+createHand();
 </script>
 
 </body>
