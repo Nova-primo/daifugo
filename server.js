@@ -23,12 +23,9 @@ wss.on("connection", (ws) => {
     ws.on("message", (msg) => {
         console.log("受信:", msg.toString());
 
-        clients.forEach(c => {
-            if (c !== ws) {
-                c.send(msg.toString());
-            }
-        });
-    });
+       clients.forEach(c => {
+    c.send(msg.toString());
+});
 
     ws.on("close", () => {
         clients = clients.filter(c => c !== ws);
