@@ -39,13 +39,10 @@ button {
 
 <h2>大富豪（テスト）</h2>
 
-<button onclick="send('カード出した')">カード出す</button>
 <button onclick="send('パス')">パス</button>
 
 <div id="log"></div>
-
 <div id="table"></div>
-
 <div id="hand"></div>
 
 <script>
@@ -83,11 +80,17 @@ let hand = [];
 
 function createHand() {
     hand = [];
+
     for(let i=0;i<5;i++){
         const suit = suits[Math.floor(Math.random()*4)];
         const rank = ranks[Math.floor(Math.random()*13)];
         hand.push(suit + rank);
     }
+
+    if(Math.random() < 0.5){
+        hand.push("JOKER");
+    }
+
     renderHand();
 }
 
