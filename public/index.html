@@ -52,9 +52,20 @@ button {
 const ws = new WebSocket("wss://" + location.host);
 
 ws.onmessage = (e) => {
-    const table = document.getElementById("table");
-    table.innerHTML = "<h3>" + e.data + "</h3>";
+    const data = JSON.parse(e.data);
+
+    if(data.type === "play"){
+        const table = document.getElementById("table");
+        table.innerHTML = "<h3>" + data.card + "</h3>";
+
+        const index = hand.indexOf(data.card);
+        if (index !== -1) {
+            hand.splice(index, 1);
+            renderHand();
+        }
+    }
 };
+
 function send(msg){
     ws.send(msg);
 }
@@ -83,16 +94,9 @@ function renderHand(){
         el.className = "card";
         el.innerText = card;
 
-       el.onclick = () => {
-    send(card);
-
-    const index = hand.indexOf(card);
-    if (index !== -1) {
-        hand.splice(index, 1);
-    }
-
-    renderHand();
-};
+        el.onclick = () => {
+            send(card);
+        };
 
         handDiv.appendChild(el);
     });
@@ -100,6 +104,5 @@ function renderHand(){
 
 createHand();
 </script>
-
 </body>
 </html>
