@@ -86,7 +86,10 @@ function renderHand(){
        el.onclick = () => {
     send(card);
 
-    hand = hand.filter(c => c !== card);
+    const index = hand.indexOf(card);
+    if (index !== -1) {
+        hand.splice(index, 1);
+    }
 
     renderHand();
 };
