@@ -55,6 +55,7 @@ ws.onmessage = (e) => {
     const data = JSON.parse(e.data);
 
     const table = document.getElementById("table");
+    const log = document.getElementById("log");
 
     if(data.type === "play"){
         table.innerHTML = "<h3>" + data.card + "</h3>";
@@ -67,9 +68,10 @@ ws.onmessage = (e) => {
     }
 
     if(data.type === "pass"){
-        table.innerHTML = "<h3>パス</h3>";
+        log.innerHTML += "<p>パス</p>";
     }
 };
+
 function send(msg){
     ws.send(msg);
 }
@@ -108,5 +110,6 @@ function renderHand(){
 
 createHand();
 </script>
+
 </body>
 </html>
