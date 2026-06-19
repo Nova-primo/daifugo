@@ -27,6 +27,12 @@ button {
     cursor:pointer;
     font-weight:bold;
 }
+#table {
+    margin:20px;
+    padding:20px;
+    border:2px solid white;
+    min-height:60px;
+}
 </style>
 </head>
 <body>
@@ -38,15 +44,17 @@ button {
 
 <div id="log"></div>
 
+<div id="table"></div>
+
 <div id="hand"></div>
 
 <script>
 const ws = new WebSocket("wss://" + location.host);
 
 ws.onmessage = (e) => {
-    document.getElementById("log").innerHTML += "<p>" + e.data + "</p>";
+    const table = document.getElementById("table");
+    table.innerHTML = "<h3>" + e.data + "</h3>";
 };
-
 function send(msg){
     ws.send(msg);
 }
