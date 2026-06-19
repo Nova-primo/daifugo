@@ -54,8 +54,9 @@ const ws = new WebSocket("wss://" + location.host);
 ws.onmessage = (e) => {
     const data = JSON.parse(e.data);
 
+    const table = document.getElementById("table");
+
     if(data.type === "play"){
-        const table = document.getElementById("table");
         table.innerHTML = "<h3>" + data.card + "</h3>";
 
         const index = hand.indexOf(data.card);
@@ -64,8 +65,11 @@ ws.onmessage = (e) => {
             renderHand();
         }
     }
-};
 
+    if(data.type === "pass"){
+        table.innerHTML = "<h3>パス</h3>";
+    }
+};
 function send(msg){
     ws.send(msg);
 }

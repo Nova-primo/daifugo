@@ -22,23 +22,36 @@ wss.on("connection", (ws) => {
     clients.push(ws);
 
     ws.on("message", (msg) => {
-        console.log("受信:", msg.toString());
+    const text = msg.toString();
+    console.log("受信:", text);
 
-        if (clients[turn] === ws) {
+    if (clients[turn] === ws) {
 
-             clients.forEach(c => {
+        if (text === "パス") {
+
+            clients.forEach(c => {
                 c.send(JSON.stringify({
-                    type: "play",
-                    card: msg.toString()
+                    type: "pass"
                 }));
             });
 
-            turn = (turn + 1) % clients.length;
-
         } else {
-            console.log("今はあなたのターンじゃない");
+
+            clients.forEach(c => {
+                c.send(JSON.stringify({
+                    type: "play",
+                    card: text
+                }));
+            });
+
         }
-    });
+
+        turn = (turn + 1) % clients.length;
+
+    } else {
+        console.log("今はあなたのターンじゃない");
+    }
+});
 
     ws.on("close", () => {
         clients = clients.filter(c => c !== ws);
